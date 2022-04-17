@@ -40,7 +40,15 @@ router.get("", async (req, res) => {
     res.status(500).json({ message: "Something get Wrong" });
   }
 });
+router.get("", async (req, res) => {
+  try {
+    const restaurants = await Restaurent.find().lean().exec();
 
+    return res.status(203).send(restaurants);
+  } catch (e) {
+    res.status(500).json({ message: "Something get Wrong" });
+  }
+});
 router.delete("/:id", async (req, res) => {
   try {
     const restaurants = await Restaurent.findByIdAndDelete(req.params.id)
